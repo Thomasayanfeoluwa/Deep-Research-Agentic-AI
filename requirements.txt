@@ -1,0 +1,5 @@
+langchain-groq
+langchain
+pydantic
+python-dotenv
+asyncio
