@@ -3,3 +3,5 @@ langchain
 pydantic
 python-dotenv
 asyncio
+requests
+langchain-core
