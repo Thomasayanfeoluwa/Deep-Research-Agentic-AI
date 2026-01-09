@@ -2,6 +2,7 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from llm_models import model_large
 from state import ReportData, ResearchState
 import json
+import re
 
 WRITER_INSTRUCTIONS = """You are a senior researcher writing a comprehensive, in-depth professional report.
 
@@ -20,29 +21,33 @@ DO NOT mention 'TensorFlow Agents' or 'PyTorch Agents' unless they appear in the
 Remember: The report must be COMPREHENSIVE (1500-2000 words) with substantial depth and detail.
 
 Format your report as:
-STRUCTURE:
-1. Executive Summary (2-3 sentences)
-2. Detailed Analysis with sections
-3. Key Findings
-4. Recommendations (if applicable)
-5. Follow-up Questions (3-5 questions)
+## Executive Summary
+[2-3 sentence summary]
 
-CRITERIA:
-- Use markdown formatting
-- Be thorough but concise
-- Only use information from provided research
-- Include specific details and examples
-- Compare and contrast when possible
+## Detailed Analysis
+[In-depth analysis with multiple sections]
 
-IMPORTANT: You MUST output a valid JSON object with these exact keys:
-- "short_summary": string (2-3 sentence summary)
-- "markdown_report": string (full markdown report)
-- "follow_up_questions": array of strings (3-5 questions)"""
+## Key Findings
+[Bulleted or numbered list]
+
+## Recommendations
+[If applicable]
+
+## Follow-up Questions
+[3-5 questions for further research]
+
+IMPORTANT: Return a valid JSON object with these exact keys:
+- "short_summary": string
+- "markdown_report": string  
+- "follow_up_questions": array of strings
+
+Return ONLY the JSON object, no other text."""
 
 async def writer_node(state: ResearchState) -> dict:
     """WriterAgent: Synthesize the final report."""
     print("Thinking about the report...🤔")
     
+    # Create prompt
     prompt = f"""ORIGINAL QUERY: {state['query']}
 
 RESEARCH RESULTS:
@@ -54,30 +59,54 @@ RESEARCH RESULTS:
 
 Return ONLY the JSON object with no additional text."""
 
+    # Get raw response (NO with_structured_output)
     response = await model_large.ainvoke([
-        SystemMessage(content="Return ONLY valid JSON, no function calls."),
+        SystemMessage(content="You are a research writer. Return JSON only."),
         HumanMessage(content=prompt)
     ])
     
-    # Clean and parse response
+    # Extract and clean JSON
     content = response.content.strip()
     
     # Remove function call wrapper if present
-    if content.startswith('<function=') and content.endswith('</function>'):
+    if content.startswith('<function='):
         start = content.find('{')
         end = content.rfind('}') + 1
-        content = content[start:end]
+        if start != -1 and end != 0:
+            content = content[start:end]
     
+    # Remove markdown code blocks
+    content = re.sub(r'```json\s*', '', content)
+    content = re.sub(r'```\s*', '', content)
+    
+    # Parse JSON
     try:
         data = json.loads(content)
-        report = ReportData(**data)
     except json.JSONDecodeError:
-        # If JSON parsing fails, create ReportData directly
-        report = ReportData(
-            short_summary=f"Research on {state['query']}",
-            markdown_report=content if len(content) > 100 else f"# Report\n\n{content}",
-            follow_up_questions=["What are the implications?", "What needs verification?"]
-        )
+        # Extract JSON with regex
+        match = re.search(r'\{.*\}', content, re.DOTALL)
+        if match:
+            try:
+                data = json.loads(match.group())
+            except:
+                data = {
+                    "short_summary": f"Research on {state['query']}",
+                    "markdown_report": content,
+                    "follow_up_questions": ["What are the key findings?", "What needs more research?"]
+                }
+        else:
+            data = {
+                "short_summary": "Report generation issue",
+                "markdown_report": content,
+                "follow_up_questions": ["Fix report formatting", "Debug JSON parsing"]
+            }
+    
+    # Create ReportData object
+    report = ReportData(
+        short_summary=data.get("short_summary", "No summary"),
+        markdown_report=data.get("markdown_report", "# No report"),
+        follow_up_questions=data.get("follow_up_questions", ["Question 1", "Question 2"])
+    )
     
     print("Finished writing report")
     return {
