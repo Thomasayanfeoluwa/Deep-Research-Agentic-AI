@@ -22,9 +22,16 @@
 3. Report Agent - make a report on results
 4. Push Agent - send a notification to the user's phone with a summary
 
-## The First Agent: Search Agent
+## The First Agent: Planner Agent
+In any given query the Planner Agent comes up with the set of web search tools to best answer the query. 
 
-Given a Search term, search for it on the internet and summarize results.
+## The Second Agent: Search Agent
+Given a Search term, the Search Agent searches for it on the internet and summarize results.
 
+## The Third Agent: Writer Agent
+This agent writes a comprehensive professional report from the searches performed.
+
+## The Fourth Agent: Push Agent
+The Agent gets the summary of all the searches and push the notification to the user. Here I used PushOver.
 
 
