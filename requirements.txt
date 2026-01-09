@@ -10,3 +10,5 @@ langgraph
 langsmith
 tavily-python
 langchain-tavily
+gradio
+json_repair
