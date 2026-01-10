@@ -35,3 +35,86 @@ This agent writes a comprehensive professional report from the searches performe
 The Agent gets the summary of all the searches and push the notification to the user. Here I used PushOver.
 
 
+
+# 🔧 Technology Stack
+
+Component	                        Technology	            Purpose
+Frontend	                        Streamlit	            Interactive chat interface
+Backend	Python 3.10+	                                    Application logic
+AI/LLM	Groq API (Llama 3.3 70B % openai/gpt-oss-20b)	    Natural language order processing
+Payments	                        Paystack API	        Secure Nigerian payment processing
+Notifications	                    PushOver                For recieving the alert of the Research Summary 
+
+# 🛠️ Installation & Setup
+Prerequisites
+Python 3.13 
+Groq API account (free tier available)
+LangChain API key (for Tracing the tools used and the Graphs)
+PushOver account (for notification)
+Tavily (test mode available)
+
+# Step 1: Clone and Setup
+bash
+# Clone the repository
+git clone <repository-url>
+cd Deep_Research_Agentic_AI
+
+# Create virtual environment
+uv venv python=3.13
+
+# Activate virtual environment
+# On Windows:
+Deep_Research_Agentic_AI\Scripts\activate
+# On macOS/Linux:
+source Deep_Research_Agentic_AI/bin/activate
+
+# Install dependencies
+uv add -r requirements.txt
+Step 2: Environment Configuration
+Create a .env file in the root directory:
+
+bash
+# Groq and LangChain API Configuration
+GROQ_API_KEY=your_groq_api_key_here
+LANGCHAIN_API_KEY="**********************"
+
+# PushOver and Tavily Configuration
+PUSHOVER_USER="*************************"
+PUSHOVER_TOKEN="************************"
+TAVILY_API_KEY="**********************"
+
+# Step 3: Obtain API Keys
+
+# Groq API Key
+Visit Groq Cloud
+Sign up for free account
+Generate API key from dashboard
+Add to .env file
+
+# LangChain API
+Sign up at LangChain
+Get Account API key
+
+# PushOver Credentials
+Download the PushOver App on Android or iOS 
+Get the Token and the User Keys 
+
+# Tavily
+Create a Tavily Account
+Login to the account and get the API Key.
+
+# Step 4: Run the Application
+
+bash
+# Start the application
+streamlit run dashboard.py
+
+# The app will be available at: http://localhost:8000
+📋 Core Components Documentation
+🎯 dashboard.py
+Purpose: Orchestrates the entir research processing workflow
+
+
+Issues: Create a GitHub issue for bugs
+Discussions: Use GitHub discussions for questions
+Email: Contact ayanfeoluwadegoke@gmail.com
