@@ -42,7 +42,6 @@ Component	                        Technology	            Purpose
 Frontend	                        Streamlit	            Interactive chat interface
 Backend	Python 3.10+	                                    Application logic
 AI/LLM	Groq API (Llama 3.3 70B % openai/gpt-oss-20b)	    Natural language order processing
-Payments	                        Paystack API	        Secure Nigerian payment processing
 Notifications	                    PushOver                For recieving the alert of the Research Summary 
 
 # 🛠️ Installation & Setup
@@ -95,7 +94,7 @@ Add to .env file
 Sign up at LangChain
 Get Account API key
 
-# PushOver Credentials
+# PushOver Credentials For Notification
 Download the PushOver App on Android or iOS 
 Get the Token and the User Keys 
 
