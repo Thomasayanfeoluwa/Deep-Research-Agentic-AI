@@ -109,7 +109,7 @@ bash
 # Start the application
 streamlit run dashboard.py
 
-# The app will be available at: http://localhost:8000
+# The app will be available at: [http://localhost:8000](https://deep-research-agentic-ai-j9bxhyedfcfqde9m72j9he.streamlit.app/)
 📋 Core Components Documentation
 🎯 dashboard.py
 Purpose: Orchestrates the entir research processing workflow
@@ -118,3 +118,9 @@ Purpose: Orchestrates the entir research processing workflow
 Issues: Create a GitHub issue for bugs
 Discussions: Use GitHub discussions for questions
 Email: Contact ayanfeoluwadegoke@gmail.com
+
+
+
+![WhatsApp Image 2026-01-10 at 14 51 01_42ab3294](https://github.com/user-attachments/assets/dad3f1d3-b141-47b6-b085-186b6acaea4a)
+
+
