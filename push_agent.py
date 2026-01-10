@@ -6,6 +6,7 @@ from langchain_core.tools import tool
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
 from llm_models import model_mini
 from state import ReportData, ResearchState
+from research_manager import run_research
 
 # Set up logging
 logger = logging.getLogger(__name__)
