@@ -1,6 +1,7 @@
 import os
 import requests
 import logging
+import streamlit as st
 from langchain_core.tools import tool
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
 from llm_models import model_mini
@@ -10,8 +11,8 @@ from state import ReportData, ResearchState
 logger = logging.getLogger(__name__)
 
 # Load environment variables
-PUSHOVER_USER = os.getenv("PUSHOVER_USER")
-PUSHOVER_TOKEN = os.getenv("PUSHOVER_TOKEN")
+PUSHOVER_USER = st.secrets.get("PUSHOVER_USER")
+PUSHOVER_TOKEN = st.secrets.get("PUSHOVER_TOKEN")
 
 PUSH_INSTRUCTIONS = """You are a research assistant. When research is complete, send a notification.
 
