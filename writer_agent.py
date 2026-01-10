@@ -59,31 +59,25 @@ RESEARCH RESULTS:
 
 Return ONLY the JSON object with no additional text."""
 
-    # Get raw response (NO with_structured_output)
     response = await model_large.ainvoke([
         SystemMessage(content="You are a research writer. Return JSON only."),
         HumanMessage(content=prompt)
     ])
     
-    # Extract and clean JSON
     content = response.content.strip()
     
-    # Remove function call wrapper if present
     if content.startswith('<function='):
         start = content.find('{')
         end = content.rfind('}') + 1
         if start != -1 and end != 0:
             content = content[start:end]
     
-    # Remove markdown code blocks
     content = re.sub(r'```json\s*', '', content)
     content = re.sub(r'```\s*', '', content)
     
-    # Parse JSON
     try:
         data = json.loads(content)
     except json.JSONDecodeError:
-        # Extract JSON with regex
         match = re.search(r'\{.*\}', content, re.DOTALL)
         if match:
             try:
@@ -101,7 +95,6 @@ Return ONLY the JSON object with no additional text."""
                 "follow_up_questions": ["Fix report formatting", "Debug JSON parsing"]
             }
     
-    # Create ReportData object
     report = ReportData(
         short_summary=data.get("short_summary", "No summary"),
         markdown_report=data.get("markdown_report", "# No report"),

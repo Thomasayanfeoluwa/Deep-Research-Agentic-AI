@@ -11,7 +11,7 @@ from state import ResearchState, ReportData
 from planner_agent import planner_node
 from search_agent import search_node
 from writer_agent import writer_node
-from notification_agent import push_node
+from push_agent import push_node
 
 class ResearchManager:
     """Manages the research workflow."""
