@@ -74,6 +74,7 @@ if start_btn and query.strip():
     
     # Report container
     report_container = st.container()
+    report_placeholder = st.empty()
     
     with status_container:
         st.subheader("📊 Research Progress")
@@ -99,13 +100,13 @@ if start_btn and query.strip():
                     status_text = "\n\n".join(status_updates)
                     status_placeholder.markdown(status_text)
                 
-                # Accumulate report
+                # Accumulate report (don't display yet)
                 elif "##" in chunk or "- " in chunk or len(chunk) > 50:
                     st.session_state.report += chunk
-                    
-                    # Update report display
-                    with report_container:
-                        st.markdown(st.session_state.report)
+            
+            # Display complete report once at the end
+            with report_container:
+                report_placeholder.markdown(st.session_state.report)
             
             # Mark as complete
             progress_bar.progress(1.0)
