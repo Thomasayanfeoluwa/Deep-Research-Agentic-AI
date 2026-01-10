@@ -5,7 +5,7 @@ from langchain_groq import ChatGroq
 load_dotenv()
 
 # Get API key
-groq_api_key = os.getenv("GROQ_API_KEY")
+groq_api_key = st.secrets.get("GROQ_API_KEY")
 if not groq_api_key:
     raise ValueError("GROQ_API_KEY not found in environment variables. Please set it in .env file")
 
