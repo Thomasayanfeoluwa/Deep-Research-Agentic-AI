@@ -20,11 +20,7 @@ async def planner_node(state: ResearchState) -> dict:
     print("Planning the searches...🤔")
     
     # Create the planner with structured output
-    # planner = model_mini.with_structured_output(WebSearchPlan)
-    planner = model_mini 
-    response = await planner.ainvoke([...])
-    plan = WebSearchPlan.model_validate(json.loads(response.content))
-    
+    planner = model_mini.with_structured_output(WebSearchPlan)
     response = await planner.ainvoke([
         SystemMessage(content=PLANNER_INSTRUCTIONS),
         HumanMessage(content=f"Query: {state['query']}")
