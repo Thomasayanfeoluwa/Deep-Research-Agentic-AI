@@ -12,3 +12,4 @@ tavily-python
 langchain-tavily
 gradio
 json_repair
+streamlit
