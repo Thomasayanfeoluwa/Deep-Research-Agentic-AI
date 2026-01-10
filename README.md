@@ -3,7 +3,7 @@
 <table style="margin: 0; text-align: left; width:100%">
     <tr>
         <td style="width: 150px; height: 150px; vertical-align: middle;">
-            <img src="../assets/business.png" width="150" height="150" style="display: block;" />
+            <img src="../agenticAI.png" width="150" height="150" style="display: block;" />
         </td>
         <td>
             <h2 style="color:#00bfff;">Commercial implications</h2>
